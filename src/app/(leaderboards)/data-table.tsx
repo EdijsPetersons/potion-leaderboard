@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/table-pagination";
 import { TableSearch } from "@/components/table-search";
+import { FlaskConical } from "lucide-react";
 
 interface BaseData {
 	id: string;
@@ -45,6 +46,7 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 	data,
 	onRowClick,
 }: LeaderboardTableProps<TData, TValue>) => {
+	const [activeTab, setActiveTab] = React.useState("traders");
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -65,20 +67,20 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 	});
 
 	return (
-		<Tabs defaultValue="traders" className="flex flex-col h-full w-full">
+		<Tabs defaultValue="traders" className="flex flex-col h-full w-full" value={activeTab} onValueChange={setActiveTab}>
 			<div className="flex justify-between">
 				<TabsList>
 					<TabsTrigger value="traders">Traders</TabsTrigger>
 					<TabsTrigger value="groups">Groups</TabsTrigger>
 				</TabsList>
-				<div className="w-96">
+				{activeTab === 'traders' &&<div className="w-96">
 					<TableSearch
 						column={table.getColumn("traderName")}
 						placeholderText="Search by name or wallet"
 					/>
-				</div>
+				</div>}
 			</div>
-			<TabsContent value="traders" className="py-4 flex-1 h-full">
+			<TabsContent value="traders" className="py-4 flex-1 space-y-4 h-full">
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -128,9 +130,19 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 						)}
 					</TableBody>
 				</Table>
+				<DataTablePagination table={table} />
 			</TabsContent>
-			<TabsContent value="groups">Change your groups here.</TabsContent>
-			<DataTablePagination table={table} />
+			<TabsContent
+				value="groups"
+				className="py-4 space-y-4 h-[600px]"
+			>
+				<div className="h-full bg-muted/50 p-16 flex-1 w-full flex justify-center items-center">
+					<div className="flex flex-col items-center gap-2">
+						<FlaskConical className="w-24 h-24 rotate-12" />
+						<p className="text-2xl">Coming Soon!</p>
+					</div>
+				</div>
+			</TabsContent>
 		</Tabs>
 	);
 };
