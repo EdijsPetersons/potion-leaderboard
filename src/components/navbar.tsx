@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
 
 const MenuLinks = [
-	{ name: "Leaderboards", href: "leaderboards" },
+	{ name: "Leaderboards", href: "/" },
 	{ name: "Learn", href: "learn" },
 	{ name: "Prizes", href: "prizes" },
 ];
@@ -50,7 +50,7 @@ function Navbar() {
 					>
 						{MenuLinks.map((link) => (
 							<li
-								className="block w-full text-md font-bold hover:text-blue-600 underline-offset-4 hover:underline lg:w-fit lg:inline-block"
+								className="block w-full text-md font-bold hover:text-blue-600 lg:w-fit lg:inline-block"
 								key={link.name}
 							>
 								<Link href={link.href} onClick={() => setOpen(false)}>
@@ -88,7 +88,7 @@ function Navbar() {
 				<div className="flex justify-end flex-1 gap-12">
 					<div className="items-center gap-4 hidden lg:flex">
 						<Button asChild variant="ghost" size='icon'>
-							<a href="https://x.com" target="_blank">
+							<a href="https://x.com/potionalpha" target="_blank">
 								<Image src="/x.svg" alt="Discord" width={16} height={16} />
 							</a>
 						</Button>
