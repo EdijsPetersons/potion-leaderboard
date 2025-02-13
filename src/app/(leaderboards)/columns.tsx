@@ -61,13 +61,14 @@ export const columns: ColumnDef<Trader>[] = [
 							bgColor,
 						)}
 					>
-						<p className="tabular-nums text-lg font-bold">
+						<p className="tabular-nums text-lg font-medium">
 							{row.getValue("rank")}
 						</p>
 					</div>
 				</div>
 			);
 		},
+		size: 28,
 	},
 	{
 		accessorKey: "traderName",
@@ -102,6 +103,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
+		size: 120,
 		filterFn: (row, columnId, value) => {
 			const traderName = row.getValue(columnId) as string;
 			const walletAddress = row.original.walletAddress as string;
@@ -138,6 +140,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
+		size: 64,
 	},
 	{
 		accessorKey: "tokensTraded",
@@ -154,6 +157,7 @@ export const columns: ColumnDef<Trader>[] = [
 				{row.getValue("tokensTraded")}
 			</div>
 		),
+		size: 60,
 		meta: {
 			filterVariant: "range",
 		},
@@ -185,6 +189,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
+		size: 80,
 		meta: {
 			filterVariant: "range",
 		},
@@ -211,6 +216,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
+		size: 56,
 		meta: {
 			filterVariant: "range",
 		},
@@ -242,12 +248,11 @@ export const columns: ColumnDef<Trader>[] = [
 							alt="solana"
 						/>
 					</div>
-					<p className="text-muted-foreground">
-						{avgBuyFormated}
-					</p>
+					<p className="text-muted-foreground">{avgBuyFormated}</p>
 				</div>
 			);
 		},
+		size: 32,
 		meta: {
 			filterVariant: "range",
 		},
@@ -267,14 +272,12 @@ export const columns: ColumnDef<Trader>[] = [
 			const avgEntryFormated = currencyFormaterShort(avgEntryUsd);
 
 			return (
-				<div
-					className="tabular-nums text-right font-bold"
-				
-				>
+				<div className="tabular-nums text-right font-bold">
 					{avgEntryFormated}
 				</div>
 			);
 		},
+		size: 32,
 		meta: {
 			filterVariant: "range",
 		},
@@ -294,6 +297,7 @@ export const columns: ColumnDef<Trader>[] = [
 				{durationFormater(row.getValue("avgHold"))}
 			</div>
 		),
+		size: 80,
 		meta: {
 			filterVariant: "range",
 		},
@@ -326,12 +330,11 @@ export const columns: ColumnDef<Trader>[] = [
 							alt="solana"
 						/>
 					</div>
-					<p className="text-muted-foreground">
-						{realizedPnlFormated}
-					</p>
+					<p className="text-muted-foreground">{realizedPnlFormated}</p>
 				</div>
 			);
 		},
+		size: 48,
 		meta: {
 			filterVariant: "range",
 		},
@@ -347,6 +350,7 @@ export const columns: ColumnDef<Trader>[] = [
 				className="flex justify-center"
 			/>
 		),
+		size: 32,
 		cell: ({ row }) => {
 			const url = row.getValue("share") as string;
 			return (

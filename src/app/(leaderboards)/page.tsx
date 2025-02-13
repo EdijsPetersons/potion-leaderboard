@@ -239,7 +239,7 @@ export default function Leaderboards() {
 	];
 
 	return (
-		<div className="p-8 font-[family-name:var(--font-geist-sans)]">
+		<div className="p-4 md:p-8 font-[family-name:var(--font-geist-sans)]">
 			<LeaderboardTable
 				columns={columns}
 				data={mockData}

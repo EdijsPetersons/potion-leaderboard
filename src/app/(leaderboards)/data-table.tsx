@@ -25,6 +25,8 @@ import {
 import { DataTablePagination } from "@/components/table-pagination";
 import { TableSearch } from "@/components/table-search";
 import { FlaskConical } from "lucide-react";
+import { availableTimeframes } from "@/constants";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 interface BaseData {
 	id: string;
@@ -47,6 +49,9 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 	onRowClick,
 }: LeaderboardTableProps<TData, TValue>) => {
 	const [activeTab, setActiveTab] = React.useState("traders");
+	const [activeTimeframe, setActiveTimeframe] = React.useState(
+		availableTimeframes[0].value,
+	);
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -67,18 +72,43 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 	});
 
 	return (
-		<Tabs defaultValue="traders" className="flex flex-col h-full w-full" value={activeTab} onValueChange={setActiveTab}>
-			<div className="flex justify-between">
-				<TabsList>
-					<TabsTrigger value="traders">Traders</TabsTrigger>
-					<TabsTrigger value="groups">Groups</TabsTrigger>
-				</TabsList>
-				{activeTab === 'traders' &&<div className="w-96">
-					<TableSearch
-						column={table.getColumn("traderName")}
-						placeholderText="Search by name or wallet"
-					/>
-				</div>}
+		<Tabs
+			defaultValue="traders"
+			className="flex flex-col h-full w-full"
+			value={activeTab}
+			onValueChange={setActiveTab}
+		>
+			<div className="flex flex-col lg:flex-row lg:justify-between">
+				<div className="flex flex-col lg:flex-row lg:gap-16">
+					<TabsList>
+						<TabsTrigger value="traders">Traders</TabsTrigger>
+						<TabsTrigger value="groups">Groups</TabsTrigger>
+					</TabsList>
+					<ToggleGroup
+						type="single"
+						value={activeTimeframe}
+						onValueChange={setActiveTimeframe}
+					>
+						{availableTimeframes.map((timeframe) => (
+							<ToggleGroupItem
+								value={timeframe.value}
+								aria-label={`Toggle ${timeframe.label}`}
+								key={timeframe.value}
+								className="rounded-full w-28"
+							>
+								{timeframe.label}
+							</ToggleGroupItem>
+						))}
+					</ToggleGroup>
+				</div>
+				{activeTab === "traders" && (
+					<div className="w-96">
+						<TableSearch
+							column={table.getColumn("traderName")}
+							placeholderText="Search by name or wallet"
+						/>
+					</div>
+				)}
 			</div>
 			<TabsContent value="traders" className="py-4 flex-1 space-y-4 h-full">
 				<Table>
@@ -87,7 +117,10 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 							<TableRow key={headerGroup.id}>
 								{headerGroup.headers.map((header) => {
 									return (
-										<TableHead key={header.id}>
+										<TableHead
+											key={header.id}
+											style={{ width: `${header.getSize()}px` }}
+										>
 											{header.isPlaceholder
 												? null
 												: flexRender(
@@ -109,7 +142,10 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 									onClick={() => onRowClick(row.original)}
 								>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
+										<TableCell
+											key={cell.id}
+											style={{ width: cell.column.getSize() + "px" }}
+										>
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),
@@ -132,10 +168,7 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 				</Table>
 				<DataTablePagination table={table} />
 			</TabsContent>
-			<TabsContent
-				value="groups"
-				className="py-4 space-y-4 h-[600px]"
-			>
+			<TabsContent value="groups" className="py-4 space-y-4 h-[600px]">
 				<div className="h-full bg-muted/50 p-16 flex-1 w-full flex justify-center items-center">
 					<div className="flex flex-col items-center gap-2">
 						<FlaskConical className="w-24 h-24 rotate-12" />
