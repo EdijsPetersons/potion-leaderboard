@@ -117,7 +117,7 @@ export default function Leaderboards() {
 				"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
 			traderName: "DiamondHands",
 			followers: 5060,
-			xUsername: "@diamondhands",
+			xUsername: "@diamondh",
 			tokensTraded: 1890,
 			winRate: 71.3,
 			tradesBuy: 1020,
