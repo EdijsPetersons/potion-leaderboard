@@ -29,7 +29,7 @@ export default function Navbar() {
 					</Link>
 				</div>
 
-				<nav className="hidden lg:flex items-center justify-center gap-6">
+				<nav className="hidden lg:flex items-center justify-center gap-12">
 					<Link
 						href="/"
 						className="text-lg transition-colors text-md font-bold hover:text-blue-600"

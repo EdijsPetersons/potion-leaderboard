@@ -15,24 +15,24 @@ export function DataTableColumnHeader<TData, TValue>({
 	className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
 	if (!column.getCanSort()) {
-		return <div className={cn("text-foreground w-full font-bold", className)}>{title}</div>;
+		return <div className={cn("text-foreground w-full font-semibold", className)}>{title}</div>;
 	}
 
 	return (
 		<div
 			className={cn(
-				"flex items-center w-full text-foreground font-bold",
+				"flex items-center w-full text-foreground font-semibold",
 				className,
 			)}
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 		>
 			<span className="mr-1">{title}</span>
 			{column.getIsSorted() === "desc" ? (
-				<ChevronDown className="size-4 text-fuchsia-600" strokeWidth={4} />
+				<ChevronDown className="size-3 text-fuchsia-600" strokeWidth={4} />
 			) : column.getIsSorted() === "asc" ? (
-				<ChevronUp className="size-4 text-fuchsia-600" strokeWidth={4} />
+				<ChevronUp className="size-3 text-fuchsia-600" strokeWidth={4} />
 			) : (
-				<ChevronsUpDown className="h-4 w-4" />
+				<ChevronsUpDown className="size-3" strokeWidth={4} />
 			)}
 		</div>
 	);

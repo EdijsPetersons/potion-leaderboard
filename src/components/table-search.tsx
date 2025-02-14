@@ -1,26 +1,25 @@
-import { Column } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { parseAsString, useQueryState } from "nuqs";
 
-interface BaseData {
-	id: string;
-}
-
-export const TableSearch = <TData extends BaseData>({
-	column,
+export const TableSearch = ({
+	searchKey,
 	placeholderText,
 }: {
-	column: Column<TData, unknown> | undefined;
+	searchKey: string;
 	placeholderText?: string;
 }) => {
-	const columnFilterValue = column?.getFilterValue();
+	const [searchQuery, setSearchQuery] = useQueryState(
+		searchKey,
+		parseAsString.withDefault(""),
+	);
 
 	return (
 		<div className="relative w-full">
 			<Input
 				className="peer ps-9"
-				value={(columnFilterValue ?? "") as string}
-				onChange={(e) => column?.setFilterValue(e.target.value)}
+				value={searchQuery}
+				onChange={(e) => setSearchQuery(e.target.value)}
 				placeholder={placeholderText}
 				type="text"
 			/>

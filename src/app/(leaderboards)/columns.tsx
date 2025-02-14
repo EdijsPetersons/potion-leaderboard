@@ -157,7 +157,7 @@ export const columns: ColumnDef<Trader>[] = [
 				{row.getValue("tokensTraded")}
 			</div>
 		),
-		size: 60,
+		size: 28,
 		meta: {
 			filterVariant: "range",
 		},
@@ -168,7 +168,7 @@ export const columns: ColumnDef<Trader>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title="Win Rate"
+				title="Win %"
 				className="flex justify-end"
 			/>
 		),
@@ -216,7 +216,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
-		size: 56,
+		size: 48,
 		meta: {
 			filterVariant: "range",
 		},
@@ -308,7 +308,7 @@ export const columns: ColumnDef<Trader>[] = [
 		header: ({ column }) => (
 			<DataTableColumnHeader
 				column={column}
-				title="Realized PNL"
+				title="PNL"
 				className="flex justify-end"
 			/>
 		),
@@ -334,7 +334,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
-		size: 48,
+		size: 40,
 		meta: {
 			filterVariant: "range",
 		},

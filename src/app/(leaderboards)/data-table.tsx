@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { parseAsString, useQueryState } from "nuqs";
 import {
 	ColumnDef,
 	SortingState,
@@ -14,6 +15,7 @@ import {
 	getFacetedMinMaxValues,
 } from "@tanstack/react-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SyncLoader } from 'react-spinners'
 import {
 	Table,
 	TableBody,
@@ -39,24 +41,38 @@ export interface Filter {
 
 interface LeaderboardTableProps<TData extends BaseData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
-	data: TData[];
+	searchKey: string;
+	data: TData[] | undefined;
+	activeTimeframe: string;
+	isLoading: boolean;
+	setActiveTimeframe: (timeframe: string) => void;
 	onRowClick: (row: TData) => void;
 }
 
 export const LeaderboardTable = <TData extends BaseData, TValue>({
 	columns,
+	searchKey,
 	data,
+	activeTimeframe,
+	isLoading,
 	onRowClick,
+	setActiveTimeframe,
 }: LeaderboardTableProps<TData, TValue>) => {
-	const [activeTab, setActiveTab] = React.useState("traders");
-	const [activeTimeframe, setActiveTimeframe] = React.useState(
-		availableTimeframes[0].value,
-	);
-	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [activeTab, setActiveTab] = useQueryState("tab", parseAsString.withDefault("traders"));
+	const [searchQuery] = useQueryState(searchKey, parseAsString.withDefault(""));
+	const [sorting, setSorting] = React.useState<SortingState>([{
+		id: "realizedPnlUsd",
+		desc: true,
+	}]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
+	const tableData = React.useMemo(() => {
+		if (!data) return [];
+		return data;
+	}, [data]);
+
 	const table = useReactTable({
-		data,
+		data: tableData,
 		columns,
 		state: {
 			sorting,
@@ -70,6 +86,13 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 		getFacetedMinMaxValues: getFacetedMinMaxValues(),
 		onSortingChange: setSorting,
 	});
+
+	React.useEffect(() => {
+		const column = table.getColumn(searchKey);
+		if (column) {
+			column.setFilterValue(searchQuery);
+		}
+	}, [searchQuery, table, searchKey]);
 
 	return (
 		<Tabs
@@ -104,7 +127,7 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 				{activeTab === "traders" && (
 					<div className="w-96">
 						<TableSearch
-							column={table.getColumn("traderName")}
+							searchKey={searchKey}
 							placeholderText="Search by name or wallet"
 						/>
 					</div>
@@ -134,17 +157,28 @@ export const LeaderboardTable = <TData extends BaseData, TValue>({
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{isLoading ? (
+							<TableRow>
+								<TableCell
+									colSpan={columns.length}
+									align="center"
+									className="h-20"
+								>
+									<SyncLoader color="white" size={6} />
+								</TableCell>
+							</TableRow>
+						) : table.getRowModel().rows.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
 									onClick={() => onRowClick(row.original)}
+									className="h-20"
 								>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell
 											key={cell.id}
-											style={{ width: cell.column.getSize() + "px" }}
+											style={{ width: `${cell.column.getSize()}px` }}
 										>
 											{flexRender(
 												cell.column.columnDef.cell,
