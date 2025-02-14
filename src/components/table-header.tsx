@@ -15,7 +15,16 @@ export function DataTableColumnHeader<TData, TValue>({
 	className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
 	if (!column.getCanSort()) {
-		return <div className={cn("text-foreground w-full font-semibold", className)}>{title}</div>;
+		return (
+			<div
+				className={cn(
+					"text-foreground w-full font-semibold text-nowrap",
+					className,
+				)}
+			>
+				{title}
+			</div>
+		);
 	}
 
 	return (
@@ -26,7 +35,7 @@ export function DataTableColumnHeader<TData, TValue>({
 			)}
 			onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 		>
-			<span className="mr-1">{title}</span>
+			<span className="mr-1 text-nowrap">{title}</span>
 			{column.getIsSorted() === "desc" ? (
 				<ChevronDown className="size-3 text-fuchsia-600" strokeWidth={4} />
 			) : column.getIsSorted() === "asc" ? (
