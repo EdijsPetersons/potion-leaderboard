@@ -5,27 +5,7 @@ import { ExternalLink } from "lucide-react";
 import { DataTableColumnHeader } from "@/components/table-header";
 import { formatNumber } from "@/lib/format-number";
 import { cn, currencyFormaterShort, durationFormater } from "@/lib/utils";
-
-export type Trader = {
-	id: string;
-	rank: number;
-	imageUrl: string;
-	traderName: string;
-	followers: number;
-	xUsername: string;
-	tokens: number;
-	winRate: number;
-	tradesBuy: number;
-	tradesSell: number;
-	avgBuySol: number;
-	avgBuyUsd: number;
-	avgEntryUsd: number;
-	avgHold: number;
-	realizedPnlSol: number;
-	realizedPnlUsd: number;
-	share: string;
-	walletAddress: string;
-};
+import { Trader } from "@/types";
 
 export const columns: ColumnDef<Trader>[] = [
 	{
@@ -143,7 +123,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 64,
 	},
 	{
-		accessorKey: "tokens",
+		accessorKey: "tokensTotal",
 		enableHiding: false,
 		header: ({ column }) => (
 			<DataTableColumnHeader
@@ -154,7 +134,7 @@ export const columns: ColumnDef<Trader>[] = [
 		),
 		cell: ({ row }) => (
 			<div className="tabular-nums text-right font-bold">
-				{row.getValue("tokens")}
+				{row.getValue("tokensTotal")}
 			</div>
 		),
 		size: 28,

@@ -39,11 +39,9 @@ interface DataTableProps<TData extends BaseData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	searchKey: string;
 	data: TData[] | undefined;
-	activeTimeframe: string;
 	isLoading: boolean;
 	filters: string[];
-	setActiveTimeframe: (timeframe: string) => void;
-	onRowClick: (row: TData) => void;
+	onRowClick?: (row: TData) => void;
 }
 
 export const DataTable = <TData extends BaseData, TValue>({
@@ -144,7 +142,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 							<TableRow
 								key={row.id}
 								data-state={row.getIsSelected() && "selected"}
-								onClick={() => onRowClick(row.original)}
+								onClick={() => typeof onRowClick === 'function' && onRowClick(row.original)}
 								className="h-20"
 							>
 								{row.getVisibleCells().map((cell) => (

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import { DataTable } from "@/components/data-table";
-import { columns, Trader } from "./columns";
+import { columns } from "./columns";
 import { traderKeys, useTraders } from "@/hooks/use-traders";
 import { parseAsString, useQueryState } from "nuqs";
 
@@ -20,8 +20,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { allTraderFilters, availableTimeframes } from "@/constants";
+import { allTraderFilters, availableTimeframes, leaderboardfilterLabels } from "@/constants";
 import { TableFilters } from "@/components/table-filters";
+import { Trader } from "@/types";
 
 export default function Leaderboards() {
 	const router = useRouter();
@@ -113,15 +114,13 @@ export default function Leaderboards() {
 								searchKey={searchKey}
 								placeholderText="Search by name or wallet"
 							/>
-							<TableFilters filters={allTraderFilters} />
+							<TableFilters filters={allTraderFilters} labels={leaderboardfilterLabels} />
 						</div>
 					)}
 				</div>
 				<TabsContent value="traders" className="py-4 flex-1 space-y-4 h-full">
 					<DataTable
 						columns={columns}
-						activeTimeframe={activeTimeframe}
-						setActiveTimeframe={setActiveTimeframe}
 						searchKey={searchKey}
 						data={tradersData}
 						filters={allTraderFilters}
@@ -133,7 +132,7 @@ export default function Leaderboards() {
 					value="groups"
 					className="py-4 space-y-4 h-[min(640px,75vh)]"
 				>
-					<div className="h-full bg-muted/50 rounded-xl p-16 flex-1 w-full flex justify-center items-center">
+					<div className="h-full bg-primary-foreground rounded-xl p-16 flex-1 w-full flex justify-center items-center">
 						<div className="flex flex-col items-center gap-2">
 							<FlaskConical className="w-24 h-24 rotate-12" />
 							<p className="text-2xl">Coming Soon!</p>

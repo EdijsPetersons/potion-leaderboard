@@ -29,9 +29,14 @@ import { Label } from "@/components/ui/label";
 import { SlidersHorizontal } from "lucide-react";
 import { useRangeFilters } from "@/hooks/use-range-filters";
 import { ParserBuilder, Values } from "nuqs";
-import { filterLabels } from "@/constants";
 
-export function TableFilters({ filters }: { filters: string[] }) {
+export function TableFilters({
+	filters,
+	labels,
+}: {
+	filters: string[];
+	labels: Record<string, string>;
+}) {
 	const [open, setOpen] = React.useState(false);
 	const { filterStates, setFilterStates } = useRangeFilters({
 		filters: filters,
@@ -42,7 +47,7 @@ export function TableFilters({ filters }: { filters: string[] }) {
 	const activeFiltersCount: number = React.useMemo(() => {
 		return Object.values(filterStates).filter((value) => {
 			if (Array.isArray(value)) {
-				return value[0] !== '' && value[1] !== '';
+				return value[0] !== "" || value[1] !== "";
 			}
 			return false;
 		}).length;
@@ -72,7 +77,7 @@ export function TableFilters({ filters }: { filters: string[] }) {
 							<DialogTitle className="text-2xl">Filters</DialogTitle>
 							<DialogDescription></DialogDescription>
 						</DialogHeader>
-						<Filters formState={formState} updateFormState={setFormState} />
+						<Filters formState={formState} updateFormState={setFormState} labels={labels} />
 					</div>
 					<DialogFooter className="border-t border-border/60 pt-6">
 						<DialogClose asChild>
@@ -101,6 +106,7 @@ export function TableFilters({ filters }: { filters: string[] }) {
 				<div className="overflow-y-auto py-6 lg:px-2">
 					<Filters
 						formState={formState}
+						labels={labels}
 						updateFormState={setFormState}
 						className="px-4"
 					/>
@@ -119,6 +125,7 @@ export function TableFilters({ filters }: { filters: string[] }) {
 
 type RangeFilterProps = {
 	filterName: string;
+	filterLabel: string;
 	min?: string;
 	max?: string;
 	onChange: ({
@@ -130,7 +137,7 @@ type RangeFilterProps = {
 	}) => void;
 };
 
-function RangeFilter({ filterName, min, max, onChange }: RangeFilterProps) {
+function RangeFilter({ filterName, filterLabel, min, max, onChange }: RangeFilterProps) {
 	const [localValues, setLocalValues] = React.useState({
 		min: min?.toString(),
 		max: max?.toString(),
@@ -153,7 +160,7 @@ function RangeFilter({ filterName, min, max, onChange }: RangeFilterProps) {
 
 	return (
 		<div className="space-y-2">
-			<Label className="capitalize font-bold">{filterLabels[filterName]}</Label>
+			<Label className="capitalize font-bold">{filterLabel}</Label>
 			<div className="flex">
 				<Input
 					className="flex-1 rounded-e-none [-moz-appearance:_textfield] focus:z-10 [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
@@ -178,6 +185,7 @@ function RangeFilter({ filterName, min, max, onChange }: RangeFilterProps) {
 
 type FiltersFormProps = {
 	formState: Values<Record<string, ParserBuilder<string[]>>>;
+	labels: Record<string, string>;
 	updateFormState: React.Dispatch<
 		React.SetStateAction<
 			Values<Record<string, ParserBuilder<string[]>>>
@@ -188,6 +196,7 @@ type FiltersFormProps = {
 function Filters({
 	className,
 	formState,
+	labels,
 	updateFormState,
 }: React.ComponentProps<"form"> & FiltersFormProps) {
 	const onChangeFilter = ({
@@ -209,6 +218,7 @@ function Filters({
 				<RangeFilter
 					key={filterName}
 					filterName={filterName}
+					filterLabel={labels[filterName]}
 					min={values?.[0]}
 					max={values?.[1]}
 					onChange={onChangeFilter}

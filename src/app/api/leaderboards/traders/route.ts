@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
-import { mockDataDaily, mockDataMonthly, mockDataWeekly } from "@/mockdata";
+import { mockTraderData } from "@/mockdata";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
 	const timeframe = searchParams.get("timeframe");
 
   if (timeframe === "weekly") {
-    return NextResponse.json(mockDataWeekly);
+    return NextResponse.json(mockTraderData);
   } else if (timeframe === "monthly") {
-    return NextResponse.json(mockDataMonthly);
+    return NextResponse.json(mockTraderData);
   }
 
-  return NextResponse.json(mockDataDaily);
+  return NextResponse.json(mockTraderData);
 }
