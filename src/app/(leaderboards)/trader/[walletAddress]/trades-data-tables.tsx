@@ -4,21 +4,32 @@ import React from 'react'
 import { FlaskConical } from 'lucide-react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { TokenStat } from '@/types';
-import { columns } from '@/app/(leaderboards)/trader/[walletAddress]/columns'
+import { columns, mobileHiddenColumns } from '@/app/(leaderboards)/trader/[walletAddress]/columns'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '@/components/data-table';
 import { TableFilters } from '@/components/table-filters';
 import { TableSearch } from '@/components/table-search';
-import { allTradeFilters, tradefilterLabels } from '@/constants';
+import { allTradeFilters, tradefilterLabels } from '@/constants/filters';
+import { useResponsive } from '@/hooks/use-responsive';
 
 export default function TradesDataTables({
   data
 }: { data: TokenStat[] }) {
   const searchKey = "tokenName";
+	const { isMobile } = useResponsive();
+	const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const [activeTab, setActiveTab] = useQueryState(
 		"tab",
 		parseAsString.withDefault("trades"),
 	);
+
+	React.useEffect(() => {
+		if (isMobile) {
+			setHiddenColumns(mobileHiddenColumns);
+		} else {
+			setHiddenColumns([]);
+		}
+	}, [isMobile]);
   
   return (
 		<Tabs
@@ -41,7 +52,10 @@ export default function TradesDataTables({
 							searchKey={searchKey}
 							placeholderText="Search by token or contract address"
 						/>
-						<TableFilters filters={allTradeFilters} labels={tradefilterLabels} />
+						<TableFilters
+							filters={allTradeFilters}
+							labels={tradefilterLabels}
+						/>
 					</div>
 				)}
 			</div>
@@ -51,13 +65,11 @@ export default function TradesDataTables({
 					searchKey={searchKey}
 					data={data}
 					filters={allTradeFilters}
-          isLoading={false}
+					hiddenColumns={hiddenColumns}
+					isLoading={false}
 				/>
 			</TabsContent>
-			<TabsContent
-				value="tokens"
-				className="py-4 space-y-4 h-64"
-			>
+			<TabsContent value="tokens" className="py-4 space-y-4 h-full">
 				<div className="h-full bg-primary-foreground rounded-xl p-16 flex-1 w-full flex justify-center items-center">
 					<div className="flex flex-col items-center gap-2">
 						<FlaskConical className="w-24 h-24 rotate-12" />
@@ -65,10 +77,7 @@ export default function TradesDataTables({
 					</div>
 				</div>
 			</TabsContent>
-			<TabsContent
-				value="groups"
-				className="py-4 space-y-4 h-64"
-			>
+			<TabsContent value="groups" className="py-4 space-y-4 h-full">
 				<div className="h-full bg-primary-foreground rounded-xl p-16 flex-1 w-full flex justify-center items-center">
 					<div className="flex flex-col items-center gap-2">
 						<FlaskConical className="w-24 h-24 rotate-12" />

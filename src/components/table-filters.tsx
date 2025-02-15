@@ -98,7 +98,7 @@ export function TableFilters({
 					<SlidersHorizontal className="h-4 w-4" />
 				</Button>
 			</DrawerTrigger>
-			<DrawerContent className="flex flex-col gap-0 p-4 md:p-6 max-h-full sm:max-h-[min(640px,80vh)] sm:max-w-lg [&>button:last-child]:hidden">
+			<DrawerContent className="flex flex-col gap-0 p-4 md:p-6 h-full sm:max-w-lg [&>button:last-child]:hidden">
 				<DrawerHeader className="text-left">
 					<DrawerTitle className="text-2xl">Filters</DrawerTitle>
 					<DrawerDescription></DrawerDescription>
@@ -213,7 +213,7 @@ function Filters({
 	};
 
 	return (
-		<div className={cn(className, "space-y-4")}>
+		<div className={cn(className, "space-y-8")}>
 			{Object.entries(formState).map(([filterName, values]) => (
 				<RangeFilter
 					key={filterName}

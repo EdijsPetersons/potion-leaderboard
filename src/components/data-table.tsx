@@ -6,6 +6,7 @@ import {
 	ColumnDef,
 	SortingState,
 	ColumnFiltersState,
+	VisibilityState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
@@ -14,17 +15,17 @@ import {
 	getSortedRowModel,
 	getFacetedMinMaxValues,
 } from "@tanstack/react-table";
-import { SyncLoader } from 'react-spinners'
 import {
 	Table,
 	TableBody,
 	TableCell,
-	TableHead,
-	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/table-pagination";
+import { DataTableHeader } from "@/components/table-header";
 import { useRangeFilters } from "@/hooks/use-range-filters";
+import { TableLoadingState } from "@/components/table-loading-state";
+import { TableEmptyState } from "@/components/table-empty-state";
 
 interface BaseData {
 	id: string;
@@ -41,6 +42,7 @@ interface DataTableProps<TData extends BaseData, TValue> {
 	data: TData[] | undefined;
 	isLoading: boolean;
 	filters: string[];
+	hiddenColumns: string[];
 	onRowClick?: (row: TData) => void;
 }
 
@@ -50,6 +52,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 	data,
 	isLoading,
 	filters,
+	hiddenColumns,
 	onRowClick,
 }: DataTableProps<TData, TValue>) => {
 	const { filterStates } = useRangeFilters({ filters });
@@ -58,7 +61,17 @@ export const DataTable = <TData extends BaseData, TValue>({
 		id: "realizedPnlUsd",
 		desc: true,
 	}]);
-	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);	
+
+	const initialColumnVisibility = React.useMemo(() => 
+		hiddenColumns.reduce((acc, columnId) => {
+			acc[columnId] = false;
+			return acc;
+		}, {} as VisibilityState),
+		[hiddenColumns]
+	);
+	
+	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(initialColumnVisibility);
 
 	const tableData = React.useMemo(() => {
 		if (!data) return [];
@@ -71,6 +84,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 		state: {
 			sorting,
 			columnFilters,
+			columnVisibility,
 		},
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -79,6 +93,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 		getFilteredRowModel: getFilteredRowModel(),
 		getFacetedMinMaxValues: getFacetedMinMaxValues(),
 		onSortingChange: setSorting,
+		onColumnVisibilityChange: setColumnVisibility,
 	});
 
 	React.useEffect(() => {
@@ -87,6 +102,15 @@ export const DataTable = <TData extends BaseData, TValue>({
 			column.setFilterValue(searchQuery);
 		}
 	}, [searchQuery, table, searchKey]);
+
+	React.useEffect(() => {
+		setColumnVisibility(
+			hiddenColumns.reduce((acc, columnId) => {
+				acc[columnId] = false;
+				return acc;
+			}, {} as VisibilityState)
+		);
+	}, [hiddenColumns]);
 
 	React.useEffect(() => {
 		const appliedFilters = Object.entries(filterStates);
@@ -105,38 +129,10 @@ export const DataTable = <TData extends BaseData, TValue>({
 	return (
 		<>
 			<Table>
-				<TableHeader>
-					{table.getHeaderGroups().map((headerGroup) => (
-						<TableRow key={headerGroup.id}>
-							{headerGroup.headers.map((header) => {
-								return (
-									<TableHead
-										key={header.id}
-										style={{ width: `${header.getSize()}px` }}
-									>
-										{header.isPlaceholder
-											? null
-											: flexRender(
-													header.column.columnDef.header,
-													header.getContext(),
-											  )}
-									</TableHead>
-								);
-							})}
-						</TableRow>
-					))}
-				</TableHeader>
+				<DataTableHeader table={table} />
 				<TableBody>
 					{isLoading ? (
-						<TableRow>
-							<TableCell
-								colSpan={columns.length}
-								align="center"
-								className="h-20"
-							>
-								<SyncLoader color="white" size={6} />
-							</TableCell>
-						</TableRow>
+						<TableLoadingState colSpan={columns.length} />
 					) : table.getRowModel().rows.length ? (
 						table.getRowModel().rows.map((row) => (
 							<TableRow
@@ -156,14 +152,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 							</TableRow>
 						))
 					) : (
-						<TableRow>
-							<TableCell
-								colSpan={columns.length}
-								className="h-full text-center"
-							>
-								No results.
-							</TableCell>
-						</TableRow>
+						<TableEmptyState colSpan={columns.length} />
 					)}
 				</TableBody>
 			</Table>

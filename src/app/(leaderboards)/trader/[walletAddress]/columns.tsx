@@ -7,7 +7,6 @@ import { TokenStat } from "@/types";
 import { formatDistanceStrict } from "date-fns";
 import { formatNumber } from "@/lib/format-number";
 import { cn, currencyFormaterShort, durationFormater } from "@/lib/utils";
-// import { cn, formatNumber, durationFormater } from "@/lib/utils";
 
 export const columns: ColumnDef<TokenStat>[] = [
 	{
@@ -15,7 +14,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 		enableSorting: false,
 		enableHiding: false,
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Token" />
+			<DataTableColumnHeader column={column} title="Token" className="w-48" />
 		),
 		cell: ({ row }) => {
 			const contractAddress = row.original.contractAddress as string;
@@ -369,4 +368,17 @@ export const columns: ColumnDef<TokenStat>[] = [
 			);
 		},
 	},
+];
+
+export const mobileHiddenColumns: string[] = [
+	"lastTradeTakenAt",
+	"mcap",
+	"avgBuyMcap",
+	"avgSellMcap",
+	"holdDuration",
+	"tradesBuy",
+	"holdingsInUsd",
+	"roi",
+	"investedUsd",
+	"share",
 ];

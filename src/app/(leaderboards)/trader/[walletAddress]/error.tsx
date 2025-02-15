@@ -14,7 +14,7 @@ export default function Error({
 	}, [error]);
 
 	return (
-		<div className="relative flex min-h-[min(640px,80svh)] flex-1 flex-col bg-background justify-center items-center">
+		<div className="relative flex h-svh flex-1 flex-col bg-background justify-center items-center">
 			<FlaskConical className="w-24 h-24 rotate-12 mb-2" />
 			<h2 className="text-2xl">Something went wrong!</h2>
 			<button

@@ -346,3 +346,14 @@ export const columns: ColumnDef<Trader>[] = [
 		},
 	},
 ];
+
+export const mobileHiddenColumns: string[] = [
+	"avgHold",
+	"avgEntryUsd",
+	"avgBuySol",
+	"tradesBuy",
+	"winRate",
+	"tokensTotal",
+	"followers",
+	"share"
+]

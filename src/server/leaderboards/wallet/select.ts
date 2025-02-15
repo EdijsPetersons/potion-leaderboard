@@ -28,6 +28,9 @@ export const fetchWalletStats = async ({
 		(trader) => trader.walletAddress === walletAddress,
 	) as Trader;
 
+	// setTimeout to simulate newtork latency
+	await new Promise((resolve) => setTimeout(resolve, 500));
+
 	return trader;
 };
 

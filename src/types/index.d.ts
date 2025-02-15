@@ -44,3 +44,8 @@ export type Trader = {
 	totalInvestedUsd: number;
 	roi: number;
 };
+
+export type Timeframe = {
+	value: string;
+	label: string;
+};

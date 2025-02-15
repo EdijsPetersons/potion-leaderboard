@@ -1,5 +1,8 @@
 import { ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
 import { Column } from "@tanstack/react-table";
+import { flexRender } from "@tanstack/react-table";
+import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { type Table } from "@tanstack/react-table";
 
 import { cn } from "@/lib/utils";
 
@@ -44,5 +47,34 @@ export function DataTableColumnHeader<TData, TValue>({
 				<ChevronsUpDown className="size-3" strokeWidth={4} />
 			)}
 		</div>
+	);
+}
+
+
+interface DataTableHeaderProps<TData> {
+	table: Table<TData>;
+}
+
+export function DataTableHeader<TData>({ table }: DataTableHeaderProps<TData>) {
+	return (
+		<TableHeader>
+			{table.getHeaderGroups().map((headerGroup) => (
+				<TableRow key={headerGroup.id}>
+					{headerGroup.headers.map((header) => (
+						<TableHead
+							key={header.id}
+							style={{ width: `${header.getSize()}px` }}
+						>
+							{header.isPlaceholder
+								? null
+								: flexRender(
+										header.column.columnDef.header,
+										header.getContext(),
+								  )}
+						</TableHead>
+					))}
+				</TableRow>
+			))}
+		</TableHeader>
 	);
 }

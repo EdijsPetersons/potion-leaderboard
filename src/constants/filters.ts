@@ -1,27 +1,3 @@
-export type Timeframe = {
-  value: string,
-  label: string
-}
-
-export const availableTimeframes: Timeframe[] = [
-	{
-		value: "daily",
-		label: "Daily",
-	},
-	{
-		value: "weekly",
-		label: "Weekly",
-	},
-	{
-		value: "monthly",
-		label: "Monthly",
-	},
-	{
-		value: "alltime",
-		label: "All",
-	},
-];
-
 export const allTraderFilters = [
 	"tokensTotal",
 	"winRate",
