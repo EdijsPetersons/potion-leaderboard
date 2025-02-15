@@ -84,18 +84,11 @@ export default function Navbar() {
 							<Drawer.Content className="right-2 top-2 bottom-2 fixed z-10 outline-none w-[310px] flex">
 								<div className="bg-background h-full w-full grow p-8 flex flex-col rounded-[16px]">
 									<div className="max-w-full h-full">
-										<Drawer.Title></Drawer.Title>
-										<Drawer.Description></Drawer.Description>
-										<Drawer.Content
-											className="h-full"
-											style={
-												{
-													"--initial-transform": "calc(100% + 8px)",
-												} as React.CSSProperties
-											}
-										>
-											<nav className="flex flex-col justify-between h-full font-bold text-lg">
-												<div className="flex flex-col gap-8">
+										<Drawer.Title className="sr-only">Navigation Menu</Drawer.Title>
+										<Drawer.Description className="sr-only"></Drawer.Description>
+										<nav className="flex flex-col justify-between h-full font-bold text-lg">
+											<div className="flex flex-col gap-8">
+												<Drawer.Close asChild>
 													<Link href="/" className="flex items-center">
 														<Image
 															src="/potion-logo.avif"
@@ -113,26 +106,34 @@ export default function Navbar() {
 															</span>
 														</p>
 													</Link>
+												</Drawer.Close>
+												<Drawer.Close asChild>
 													<Link
 														href="/"
 														className="transition-colors hover:text-primary"
 													>
 														Leaderboards
 													</Link>
+												</Drawer.Close>
+												<Drawer.Close asChild>
 													<Link
 														href="/learn"
 														className="transition-colors hover:text-primary"
 													>
 														Learn
 													</Link>
+												</Drawer.Close>
+												<Drawer.Close asChild>
 													<Link
 														href="/prizes"
 														className="transition-colors hover:text-primary"
 													>
 														Prizes
 													</Link>
-												</div>
-												<div className="flex flex-col gap-6">
+												</Drawer.Close>
+											</div>
+											<div className="flex flex-col gap-6">
+												<Drawer.Close asChild>
 													<a
 														href="https://x.com/potionalpha"
 														target="_blank"
@@ -146,6 +147,8 @@ export default function Navbar() {
 														/>
 														@potionalpha
 													</a>
+												</Drawer.Close>
+												<Drawer.Close asChild>
 													<a
 														href="https://dicord.com"
 														target="_blank"
@@ -159,9 +162,9 @@ export default function Navbar() {
 														/>
 														Join discord channel
 													</a>
-												</div>
-											</nav>
-										</Drawer.Content>
+												</Drawer.Close>
+											</div>
+										</nav>
 									</div>
 								</div>
 							</Drawer.Content>
