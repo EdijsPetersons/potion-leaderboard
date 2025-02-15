@@ -13,7 +13,7 @@ export type Trader = {
 	traderName: string;
 	followers: number;
 	xUsername: string;
-	tokensTraded: number;
+	tokens: number;
 	winRate: number;
 	tradesBuy: number;
 	tradesSell: number;
@@ -143,7 +143,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 64,
 	},
 	{
-		accessorKey: "tokensTraded",
+		accessorKey: "tokens",
 		enableHiding: false,
 		header: ({ column }) => (
 			<DataTableColumnHeader
@@ -154,7 +154,7 @@ export const columns: ColumnDef<Trader>[] = [
 		),
 		cell: ({ row }) => (
 			<div className="tabular-nums text-right font-bold">
-				{row.getValue("tokensTraded")}
+				{row.getValue("tokens")}
 			</div>
 		),
 		size: 28,

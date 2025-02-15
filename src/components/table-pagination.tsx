@@ -21,7 +21,7 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
 	return (
 		<div className="flex items-center justify-between gap-8">
-			<div className="flex grow justify-end whitespace-nowrap text-sm text-muted-foreground">
+			<div className="flex grow whitespace-nowrap text-sm text-muted-foreground">
 				<p
 					className="whitespace-nowrap text-sm text-muted-foreground"
 					aria-live="polite"
@@ -53,7 +53,7 @@ export function DataTablePagination<TData>({
 						<PaginationItem>
 							<Button
 								size="icon"
-								variant="outline"
+								variant="secondary"
 								className="disabled:pointer-events-none disabled:opacity-50"
 								onClick={() => table.firstPage()}
 								disabled={!table.getCanPreviousPage()}
@@ -65,7 +65,7 @@ export function DataTablePagination<TData>({
 						<PaginationItem>
 							<Button
 								size="icon"
-								variant="outline"
+								variant="secondary"
 								className="disabled:pointer-events-none disabled:opacity-50"
 								onClick={() => table.previousPage()}
 								disabled={!table.getCanPreviousPage()}
@@ -77,7 +77,7 @@ export function DataTablePagination<TData>({
 						<PaginationItem>
 							<Button
 								size="icon"
-								variant="outline"
+								variant="secondary"
 								className="disabled:pointer-events-none disabled:opacity-50"
 								onClick={() => table.nextPage()}
 								disabled={!table.getCanNextPage()}
@@ -89,7 +89,7 @@ export function DataTablePagination<TData>({
 						<PaginationItem>
 							<Button
 								size="icon"
-								variant="outline"
+								variant="secondary"
 								className="disabled:pointer-events-none disabled:opacity-50"
 								onClick={() => table.lastPage()}
 								disabled={!table.getCanNextPage()}

@@ -1,7 +1,9 @@
 'use client'
 
+import { useRouter } from "next/navigation";
+
 import { DataTable } from "@/components/data-table";
-import { columns } from "./columns";
+import { columns, Trader } from "./columns";
 import { traderKeys, useTraders } from "@/hooks/use-traders";
 import { parseAsString, useQueryState } from "nuqs";
 
@@ -18,9 +20,11 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { availableTimeframes } from "@/constants";
+import { allTraderFilters, availableTimeframes } from "@/constants";
+import { TableFilters } from "@/components/table-filters";
 
 export default function Leaderboards() {
+	const router = useRouter();
 	const searchKey = "traderName";
 	const [activeTab, setActiveTab] = useQueryState(
 		"tab",
@@ -35,8 +39,12 @@ export default function Leaderboards() {
 		queryKey: traderKeys.filters({ timeframe: activeTimeframe }),
 	});	
 
+	const onRowClick = (row: Trader) => {
+		router.push(`/trader/${row.walletAddress}`);
+	};
+
 	return (
-		<div className="p-4 md:p-8 font-[family-name:var(--font-geist-sans)]">
+		<div className="p-4 md:p-8 h-full font-[family-name:var(--font-geist-sans)]">
 			<Tabs
 				defaultValue="traders"
 				className="flex flex-col h-full w-full"
@@ -66,7 +74,7 @@ export default function Leaderboards() {
 								</ToggleGroupItem>
 							))}
 						</ToggleGroup>
-						{/* dropdown on mobile */}
+						{/* timeframes dropdown on mobile */}
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button
@@ -77,7 +85,11 @@ export default function Leaderboards() {
 									<Calendar className="w-4 h-4" />
 								</Button>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="w-36" side="bottom" align="end">
+							<DropdownMenuContent
+								className="w-36 bg-background"
+								side="bottom"
+								align="end"
+							>
 								<DropdownMenuRadioGroup
 									value={activeTimeframe}
 									onValueChange={setActiveTimeframe}
@@ -96,11 +108,12 @@ export default function Leaderboards() {
 						</DropdownMenu>
 					</div>
 					{activeTab === "traders" && (
-						<div className="w-full md:w-96">
+						<div className="w-full flex items-center gap-4 md:w-96">
 							<TableSearch
 								searchKey={searchKey}
 								placeholderText="Search by name or wallet"
 							/>
+							<TableFilters filters={allTraderFilters} />
 						</div>
 					)}
 				</div>
@@ -111,14 +124,16 @@ export default function Leaderboards() {
 						setActiveTimeframe={setActiveTimeframe}
 						searchKey={searchKey}
 						data={tradersData}
+						filters={allTraderFilters}
 						isLoading={fetchingTraderData}
-						onRowClick={(row) => {
-							console.log(row);
-						}}
+						onRowClick={onRowClick}
 					/>
 				</TabsContent>
-				<TabsContent value="groups" className="py-4 space-y-4 h-[500px]">
-					<div className="h-full bg-muted/50 p-16 flex-1 w-full flex justify-center items-center">
+				<TabsContent
+					value="groups"
+					className="py-4 space-y-4 h-[min(640px,75vh)]"
+				>
+					<div className="h-full bg-muted/50 rounded-xl p-16 flex-1 w-full flex justify-center items-center">
 						<div className="flex flex-col items-center gap-2">
 							<FlaskConical className="w-24 h-24 rotate-12" />
 							<p className="text-2xl">Coming Soon!</p>

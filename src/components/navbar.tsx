@@ -22,7 +22,7 @@ export default function Navbar() {
 							height={56}
 							className="w-12 h-12 mr-4"
 						/>
-						<p className="hidden text-lg leading-none uppercase md:block">
+						<p className="text-lg leading-none uppercase">
 							<span className="block text-3xl font-black">Potion</span>
 							<span className="text-fuchsia-600 font-bold">Leaderboard</span>
 						</p>

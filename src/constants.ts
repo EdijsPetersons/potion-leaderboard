@@ -21,3 +21,23 @@ export const availableTimeframes: Timeframe[] = [
 		label: "All-Time",
 	},
 ];
+
+export const allTraderFilters = [
+	"tokens",
+	"winRate",
+	"tradesBuy",
+	"avgBuySol",
+	"avgEntryUsd",
+	"avgHold",
+	"realizedPnlUsd",
+];
+
+export const filterLabels: Record<string, string> = {
+	tokens: "Tokens",
+	winRate: "Win Rate",
+	tradesBuy: "Trades",
+	avgBuySol: "Avg Buy (SOL)",
+	avgEntryUsd: "Avg Entry (USD)",
+	avgHold: "Avg Hold",
+	realizedPnlUsd: "Realized PNL (USD)",
+} as const

@@ -24,6 +24,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/table-pagination";
+import { useRangeFilters } from "@/hooks/use-range-filters";
 
 interface BaseData {
 	id: string;
@@ -40,6 +41,7 @@ interface DataTableProps<TData extends BaseData, TValue> {
 	data: TData[] | undefined;
 	activeTimeframe: string;
 	isLoading: boolean;
+	filters: string[];
 	setActiveTimeframe: (timeframe: string) => void;
 	onRowClick: (row: TData) => void;
 }
@@ -49,8 +51,10 @@ export const DataTable = <TData extends BaseData, TValue>({
 	searchKey,
 	data,
 	isLoading,
+	filters,
 	onRowClick,
 }: DataTableProps<TData, TValue>) => {
+	const { filterStates } = useRangeFilters({ filters });
 	const [searchQuery] = useQueryState(searchKey, parseAsString.withDefault(""));
 	const [sorting, setSorting] = React.useState<SortingState>([{
 		id: "realizedPnlUsd",
@@ -85,6 +89,20 @@ export const DataTable = <TData extends BaseData, TValue>({
 			column.setFilterValue(searchQuery);
 		}
 	}, [searchQuery, table, searchKey]);
+
+	React.useEffect(() => {
+		const appliedFilters = Object.entries(filterStates);
+
+		if (appliedFilters.length > 0) {
+			const mapedFilters = appliedFilters.map(([filterId, filterValue]) => {
+				return {
+					id: filterId,
+					value: filterValue,
+				};
+			});
+			setColumnFilters(mapedFilters);
+		}
+	}, [filterStates, table]);
 
 	return (
 		<>
