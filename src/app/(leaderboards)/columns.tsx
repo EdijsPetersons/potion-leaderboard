@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import { ColumnDef } from "@tanstack/react-table";
 import { ExternalLink } from "lucide-react";
@@ -6,6 +5,7 @@ import { DataTableColumnHeader } from "@/components/table-header";
 import { formatNumber } from "@/lib/format-number";
 import { cn, currencyFormaterShort, durationFormater } from "@/lib/utils";
 import { Trader } from "@/types";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const columns: ColumnDef<Trader>[] = [
 	{
@@ -71,11 +71,10 @@ export const columns: ColumnDef<Trader>[] = [
 
 			return (
 				<div className="flex items-center gap-x-3">
-					<img
-						src={imageUrl}
-						alt={traderName}
-						className="w-11 h-11 rounded-full"
-					/>
+					<Avatar className="w-11 h-11 rounded-full">
+						<AvatarImage src={imageUrl} alt="Trader avatar" />
+						<AvatarFallback className="rounded-full">PO</AvatarFallback>
+					</Avatar>
 					<div>
 						<div className="font-bold leading-6">{traderName}</div>
 						<div className="text-xs leading-5 text-muted-foreground">
