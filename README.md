@@ -62,26 +62,26 @@ Filters — Could move them inside a form and add proper input validation with z
 Solution should:
 
 - **Data Integration:**
-  [x] Consume a mock API endpoint that returns JSON data for traders.
-  [x] Display key information for each trader including:
-    [x] Wallet address (with a “copy to clipboard” feature)
-    [x] Profile picture
-    [x] X account handle & follower count
-    [x] Current P&L for the selected time period
-    [x] *Everything in the Figma designs*
+  - [x] Consume a mock API endpoint that returns JSON data for traders.
+  - [x] Display key information for each trader including:
+  - [x] Wallet address (with a “copy to clipboard” feature)
+  - [x] Profile picture
+  - [x] X account handle & follower count
+  - [x] Current P&L for the selected time period
+  - [x] *Everything in the Figma designs*
 - **UI/UX Requirements:**
-  [x] Follow the design from our [Potion Leaderboard Figma designs](https://www.figma.com/design/4UbpftRYpuL5SczCjk9eOW/Potion-Leaderboard?node-id=0-1&t=BewzRrTb97BcxXsf-1) (feel free to interpret and improve for responsiveness and usability).
-  [x] Implement a clean, responsive design that works well on desktop and mobile.
-  [x] Sorting by the various columns works correctly
-  [x] Pagination controls and info for the results
-  [x] Provide a search bar to filter wallets by wallet address or X account name.
-  [x] Add filters for all data points (in a slide out drawer/pop up) to limit the results by.
+  - [x] Follow the design from our [Potion Leaderboard Figma designs](https://www.figma.com/design/4UbpftRYpuL5SczCjk9eOW/Potion-Leaderboard?node-id=0-1&t=BewzRrTb97BcxXsf-1) (feel free to interpret and improve for responsiveness and usability).
+  - [x] Implement a clean, responsive design that works well on desktop and mobile.
+  - [x] Sorting by the various columns works correctly
+  - [x] Pagination controls and info for the results
+  - [x] Provide a search bar to filter wallets by wallet address or X account name.
+  - [x] Add filters for all data points (in a slide out drawer/pop up) to limit the results by.
 - **Technical Requirements:**
-  [x] Use a modern frontend framework/library (ex: React or similar).
-  [x] It must be written in Javascript or a no-code solution —— I hope Typescript is acceptable
-  [x] Code should be clean, well-structured, and documented.
-  [x] You may use any CSS framework or styling solution you’re comfortable with.
-  [x] Ensure the page gracefully handles loading states and errors from the API.
+  - [x] Use a modern frontend framework/library (ex: React or similar).
+  - [x] It must be written in Javascript or a no-code solution —— I hope Typescript is acceptable
+  - [x] Code should be clean, well-structured, and documented.
+  - [x] You may use any CSS framework or styling solution you’re comfortable with.
+  - [x] Ensure the page gracefully handles loading states and errors from the API.
 
 ## Notes
 
