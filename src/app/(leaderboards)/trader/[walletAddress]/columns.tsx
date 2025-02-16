@@ -63,7 +63,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Last Trade"
-				className="justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		size: 48,
@@ -71,12 +71,15 @@ export const columns: ColumnDef<TokenStat>[] = [
 			const lastTradeTakenAt = row.getValue("lastTradeTakenAt") as string;
 
 			return (
-				<div className="flex justify-end font-bold">
+				<div className="hidden lg:flex justify-end font-bold">
 					{formatDistanceStrict(new Date(lastTradeTakenAt), new Date(), {
 						addSuffix: true,
 					})}
 				</div>
 			);
+		},
+		meta: {
+			mobileHidden: true,
 		},
 	},
 	{
@@ -85,18 +88,21 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="MC"
-				className="justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		size: 48,
 		cell: ({ row }) => {
 			const mcap = row.getValue("mcap") as number;
 			return (
-				<div className="flex justify-end font-bold">{formatNumber(mcap)}</div>
+				<div className="hidden lg:flex justify-end font-bold">
+					{formatNumber(mcap)}
+				</div>
 			);
 		},
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -106,7 +112,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Invested"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		cell: ({ row }) => {
@@ -116,7 +122,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			const avgBuyFormated = currencyFormaterShort(avgBuyUsd);
 
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<div className="tabular-num font-bold flex justify-end gap-1">
 						<p>{avgBuySol}</p>
 						<Image
@@ -133,6 +139,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 		size: 32,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -189,7 +196,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="ROI"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		size: 48,
@@ -204,7 +211,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 
 			const prefix = roi > 0 ? "+" : roi < 0 ? "-" : "";
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<div className="tabular-num font-bold flex justify-end gap-1">
 						<p className={cn(color)}>
 							{prefix}
@@ -214,6 +221,10 @@ export const columns: ColumnDef<TokenStat>[] = [
 				</div>
 			);
 		},
+		meta: {
+			filterVariant: "range",
+			mobileHidden: true,
+		},
 	},
 	{
 		accessorKey: "tradesBuy",
@@ -222,7 +233,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Trades"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		cell: ({ row }) => {
@@ -230,7 +241,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			const tradesSell = row.original.tradesSell as number;
 
 			return (
-				<div className="font-bold flex justify-end gap-1">
+				<div className="font-bold hidden lg:flex justify-end gap-1">
 					<p className="tabular-nums text-green-500">{tradesBuy}</p>
 					<span className="text-muted-foreground">{"/"}</span>
 					<p className="text-muted-foreground text-red-500">{tradesSell}</p>
@@ -240,6 +251,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 		size: 48,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -249,7 +261,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Holding"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		cell: ({ row }) => {
@@ -259,7 +271,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			const holdingsInUsdFormated = currencyFormaterShort(holdingsInUsd);
 
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<div className="tabular-num font-bold flex justify-end gap-1">
 						<p>{holdingsInSol}</p>
 						<Image
@@ -276,6 +288,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 		size: 32,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -284,20 +297,21 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Avg Buy"
-				className="justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		size: 48,
 		cell: ({ row }) => {
 			const avgBuyMcap = row.getValue("avgBuyMcap") as number;
 			return (
-				<div className="flex justify-end font-bold">
+				<div className="hidden lg:flex justify-end font-bold">
 					{formatNumber(avgBuyMcap)}
 				</div>
 			);
 		},
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -306,20 +320,21 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Avg Sell"
-				className="justify-end"
+				className="hidden lg:flex justify-end"
 			/>
 		),
 		size: 48,
 		cell: ({ row }) => {
 			const avgSellMcap = row.getValue("avgSellMcap") as number;
 			return (
-				<div className="flex justify-end font-bold">
+				<div className="hidden lg:flex justify-end font-bold">
 					{formatNumber(avgSellMcap)}
 				</div>
 			);
 		},
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -328,7 +343,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Held"
-				className="justify-end"
+				className="jhidden lg:flex ustify-end"
 			/>
 		),
 		size: 48,
@@ -336,10 +351,13 @@ export const columns: ColumnDef<TokenStat>[] = [
 			const holdDuration = row.getValue("holdDuration") as number;
 
 			return (
-				<div className="flex justify-end font-bold">
+				<div className="hidden lg:flex justify-end font-bold">
 					{durationFormater(holdDuration)}
 				</div>
 			);
+		},
+		meta: {
+			mobileHidden: true,
 		},
 	},
 	{
@@ -350,7 +368,7 @@ export const columns: ColumnDef<TokenStat>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Share"
-				className="flex justify-center"
+				className="hidden lg:flex justify-center"
 			/>
 		),
 		size: 32,
@@ -361,24 +379,14 @@ export const columns: ColumnDef<TokenStat>[] = [
 					href={url}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex justify-center"
+					className="hidden lg:flex justify-center"
 				>
 					<ExternalLink className="h-4 w-4 text-fuchsia-600" />
 				</a>
 			);
 		},
+		meta: {
+			mobileHidden: true,
+		},
 	},
-];
-
-export const mobileHiddenColumns: string[] = [
-	"lastTradeTakenAt",
-	"mcap",
-	"avgBuyMcap",
-	"avgSellMcap",
-	"holdDuration",
-	"tradesBuy",
-	"holdingsInUsd",
-	"roi",
-	"investedUsd",
-	"share",
 ];

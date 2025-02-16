@@ -16,7 +16,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Rank"
-				className="flex justify-center w-12"
+				className="flex justify-center max-w-8"
 			/>
 		),
 		cell: ({ row }) => {
@@ -40,13 +40,13 @@ export const columns: ColumnDef<Trader>[] = [
 						bgColor,
 					)}
 				>
-					<p className="tabular-nums text-lg font-medium">
-						{row.getValue("rank")}
+					<p className="tabular-nums font-medium">
+						{rank === 1 ? '🏆' : rank}
 					</p>
 				</div>
 			);
 		},
-		size: 48,
+		size: 8,
 	},
 	{
 		accessorKey: "traderName",
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
-		size: 256,
+		size: 456,
 		filterFn: (row, columnId, value) => {
 			const traderName = row.getValue(columnId) as string;
 			const walletAddress = row.original.walletAddress as string;
@@ -360,14 +360,3 @@ export const columns: ColumnDef<Trader>[] = [
 		},
 	},
 ];
-
-export const mobileHiddenColumns: string[] = [
-	"avgHold",
-	"avgEntryUsd",
-	"avgBuySol",
-	"tradesBuy",
-	"winRate",
-	"tokensTotal",
-	"followers",
-	"share"
-]

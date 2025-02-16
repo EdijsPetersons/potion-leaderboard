@@ -40,7 +40,7 @@ export const fetchTokenStatsForWallet = async ({
 	walletAddress: string;
 }): Promise<TokenStat[]> => {
 	// add random failure
-	const failure = Math.random() < 0.05;
+	const failure = Math.random() < 0.1;
 
 	if (failure) {
 		throw new Error("Failed to fetch token stats");

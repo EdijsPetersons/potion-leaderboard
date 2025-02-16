@@ -1,7 +1,7 @@
 import { fetchTokenStatsForWallet, fetchWalletDetails } from "@/server/leaderboards/wallet/select";
-import Profile from "./profile";
-import WalletStats from "./stats";
-import TradesDataTables from "./trades-data-tables";
+import Profile from "./components/profile";
+import WalletStats from "./components/stats";
+import TradesDataTables from "./components/trades-data-tables";
 
 export default async function Page({
 	params,

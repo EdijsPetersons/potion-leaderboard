@@ -6,7 +6,6 @@ import {
 	ColumnDef,
 	SortingState,
 	ColumnFiltersState,
-	VisibilityState,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
@@ -43,7 +42,6 @@ interface DataTableProps<TData extends BaseData, TValue> {
 	data: TData[] | undefined;
 	isLoading: boolean;
 	filters: string[];
-	hiddenColumns: string[];
 	onRowClick?: (row: TData) => void;
 }
 
@@ -53,7 +51,6 @@ export const DataTable = <TData extends BaseData, TValue>({
 	data,
 	isLoading,
 	filters,
-	hiddenColumns,
 	onRowClick,
 }: DataTableProps<TData, TValue>) => {
 	const { filterStates } = useRangeFilters({ filters });
@@ -63,17 +60,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 		desc: true,
 	}]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);	
-
-	const initialColumnVisibility = React.useMemo(() => 
-		hiddenColumns.reduce((acc, columnId) => {
-			acc[columnId] = false;
-			return acc;
-		}, {} as VisibilityState),
-		[hiddenColumns]
-	);
 	
-	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(initialColumnVisibility);
-
 	const tableData = React.useMemo(() => {
 		if (!data) return [];
 		return data;
@@ -85,7 +72,6 @@ export const DataTable = <TData extends BaseData, TValue>({
 		state: {
 			sorting,
 			columnFilters,
-			columnVisibility,
 		},
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -94,7 +80,6 @@ export const DataTable = <TData extends BaseData, TValue>({
 		getFilteredRowModel: getFilteredRowModel(),
 		getFacetedMinMaxValues: getFacetedMinMaxValues(),
 		onSortingChange: setSorting,
-		onColumnVisibilityChange: setColumnVisibility,
 	});
 
 	React.useEffect(() => {
@@ -103,15 +88,6 @@ export const DataTable = <TData extends BaseData, TValue>({
 			column.setFilterValue(searchQuery);
 		}
 	}, [searchQuery, table, searchKey]);
-
-	React.useEffect(() => {
-		setColumnVisibility(
-			hiddenColumns.reduce((acc, columnId) => {
-				acc[columnId] = false;
-				return acc;
-			}, {} as VisibilityState)
-		);
-	}, [hiddenColumns]);
 
 	React.useEffect(() => {
 		const appliedFilters = Object.entries(filterStates);
@@ -146,7 +122,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 									<TableCell
 										key={cell.id}
 										style={{ width: `${cell.column.getSize()}px` }}
-										className={cn(cell.column.columnDef.meta?.mobileHidden && "hidden md:table-cell")}
+										className={cn(cell.column.columnDef.meta?.mobileHidden && "hidden lg:table-cell")}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>

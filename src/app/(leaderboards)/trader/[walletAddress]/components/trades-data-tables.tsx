@@ -4,32 +4,21 @@ import React from 'react'
 import { FlaskConical } from 'lucide-react';
 import { useQueryState, parseAsString } from 'nuqs';
 import { TokenStat } from '@/types';
-import { columns, mobileHiddenColumns } from '@/app/(leaderboards)/trader/[walletAddress]/columns'
+import { columns } from '@/app/(leaderboards)/trader/[walletAddress]/columns'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DataTable } from '@/components/data-table';
 import { TableFilters } from '@/components/table-filters';
 import { TableSearch } from '@/components/table-search';
 import { allTradeFilters, tradefilterLabels } from '@/constants/filters';
-import { useResponsive } from '@/hooks/use-responsive';
 
 export default function TradesDataTables({
   data
 }: { data: TokenStat[] }) {
   const searchKey = "tokenName";
-	const { isMobile } = useResponsive();
-	const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
   const [activeTab, setActiveTab] = useQueryState(
 		"tab",
 		parseAsString.withDefault("trades"),
 	);
-
-	React.useEffect(() => {
-		if (isMobile) {
-			setHiddenColumns(mobileHiddenColumns);
-		} else {
-			setHiddenColumns([]);
-		}
-	}, [isMobile]);
   
   return (
 		<Tabs
@@ -65,7 +54,6 @@ export default function TradesDataTables({
 					searchKey={searchKey}
 					data={data}
 					filters={allTradeFilters}
-					hiddenColumns={hiddenColumns}
 					isLoading={false}
 				/>
 			</TabsContent>

@@ -79,7 +79,6 @@ function LeaderboardsPageContent() {
 							data={tradersData}
 							filters={allTraderFilters}
 							isLoading={fetchingTraderData}
-							hiddenColumns={[]}
 							onRowClick={onRowClick}
 						/>
 					</TabsContent>
