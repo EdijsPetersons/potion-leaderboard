@@ -17,7 +17,7 @@ const buttonVariants = cva(
 					"border border-border rounded-full border-input bg-background shadow-sm hover:bg-muted text-muted-foreground",
 				secondary:
 					"bg-muted text-muted-foreground shadow-sm hover:bg-muted/80 border border-border",
-				ghost: "hover:bg-accent hover:text-accent-foreground",
+				ghost: "hover:text-muted-foreground rounded-full",
 				link: "text-primary hover:underline-none",
 			},
 			size: {

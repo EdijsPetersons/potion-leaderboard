@@ -38,9 +38,10 @@ export function TableFilters({
 	labels: Record<string, string>;
 }) {
 	const [open, setOpen] = React.useState(false);
-	const { filterStates, setFilterStates } = useRangeFilters({
-		filters: filters,
-	});
+	const { filterStates, setFilterStates } =
+		useRangeFilters({
+			filters: filters,
+		});
 	const [formState, setFormState] = React.useState(filterStates);
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 
@@ -56,6 +57,15 @@ export function TableFilters({
 	const applyFilters = () => {
 		setFilterStates(formState);
 		setOpen(false);
+	};
+
+	const clearFilters = () => {		
+		const clearedState = filters.reduce((acc, filter) => {
+			acc[filter] = ["", ""];
+			return acc;
+		}, {} as Values<Record<string, ParserBuilder<string[]>>>);
+		setFormState(clearedState);
+		setFilterStates(clearedState);
 	};
 
 	if (isDesktop) {
@@ -80,6 +90,9 @@ export function TableFilters({
 						<Filters formState={formState} updateFormState={setFormState} labels={labels} />
 					</div>
 					<DialogFooter className="border-t border-border/60 pt-6">
+						<Button type="button" variant='ghost' onClick={clearFilters}>
+							Clear Filters
+						</Button>
 						<DialogClose asChild>
 							<Button type="button" onClick={applyFilters}>
 								Apply Filters
@@ -117,6 +130,9 @@ export function TableFilters({
 					/>
 				</div>
 				<DrawerFooter className="pt-2">
+					<Button type="button" variant="ghost" onClick={clearFilters}>
+						Clear Filters
+					</Button>
 					<DrawerClose asChild>
 						<Button type="button" onClick={applyFilters}>
 							Apply Filters
@@ -147,6 +163,13 @@ function RangeFilter({ filterName, filterLabel, min, max, onChange }: RangeFilte
 		min: min?.toString(),
 		max: max?.toString(),
 	});
+
+	React.useEffect(() => {
+		setLocalValues({
+			min: min?.toString(),
+			max: max?.toString(),
+		});
+	}, [min, max]);
 
 	const handleChange =
 		(type: "min" | "max") => (e: React.ChangeEvent<HTMLInputElement>) => {
