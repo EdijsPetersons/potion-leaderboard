@@ -6,9 +6,8 @@ import { SyncLoader } from "react-spinners";
 import { FlaskConical } from "lucide-react";
 
 import { DataTable } from "@/components/data-table";
-import { columns, mobileHiddenColumns } from "./columns";
+import { columns } from "./columns";
 import { traderKeys, useTraders } from "@/hooks/use-traders";
-import { useResponsive } from "@/hooks/use-responsive";
 import { parseAsString, useQueryState } from "nuqs";
 
 import { TableSearch } from "@/components/table-search";
@@ -22,8 +21,6 @@ import { Trader } from "@/types";
 
 function LeaderboardsPageContent() {
   const router = useRouter();
-	const { isMobile } = useResponsive();
-	const [hiddenColumns, setHiddenColumns] = React.useState<string[]>([]);
 	const searchKey = "traderName";
 	const [activeTab, setActiveTab] = useQueryState(
 		"tab",
@@ -41,14 +38,6 @@ function LeaderboardsPageContent() {
 	const onRowClick = (row: Trader) => {
 		router.push(`/trader/${row.walletAddress}`);
 	};
-
-	React.useEffect(() => {
-		if (isMobile) {
-			setHiddenColumns(mobileHiddenColumns);
-		} else {
-			setHiddenColumns([]);
-		}
-	}, [isMobile]);
 
 	return (
 		<div className="p-4 md:p-8 h-full pt-24 font-[family-name:var(--font-geist-sans)]">
@@ -90,7 +79,7 @@ function LeaderboardsPageContent() {
 							data={tradersData}
 							filters={allTraderFilters}
 							isLoading={fetchingTraderData}
-							hiddenColumns={hiddenColumns}
+							hiddenColumns={[]}
 							onRowClick={onRowClick}
 						/>
 					</TabsContent>

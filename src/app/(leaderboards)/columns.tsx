@@ -16,7 +16,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Rank"
-				className="flex justify-center"
+				className="flex justify-center w-12"
 			/>
 		),
 		cell: ({ row }) => {
@@ -34,28 +34,30 @@ export const columns: ColumnDef<Trader>[] = [
 			}
 
 			return (
-				<div className="flex justify-center items-center">
-					<div
-						className={cn(
-							"rounded-full w-8 h-8 flex justify-center items-center",
-							bgColor,
-						)}
-					>
-						<p className="tabular-nums text-lg font-medium">
-							{row.getValue("rank")}
-						</p>
-					</div>
+				<div
+					className={cn(
+						"rounded-full w-8 h-8 flex justify-center items-center",
+						bgColor,
+					)}
+				>
+					<p className="tabular-nums text-lg font-medium">
+						{row.getValue("rank")}
+					</p>
 				</div>
 			);
 		},
-		size: 28,
+		size: 48,
 	},
 	{
 		accessorKey: "traderName",
 		enableSorting: false,
 		enableHiding: false,
 		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="Trader" />
+			<DataTableColumnHeader
+				column={column}
+				title="Trader"
+				className="w-full lg:min-w-64"
+			/>
 		),
 		cell: ({ row }) => {
 			const walletAddress = row.original.walletAddress as string;
@@ -83,7 +85,7 @@ export const columns: ColumnDef<Trader>[] = [
 				</div>
 			);
 		},
-		size: 120,
+		size: 256,
 		filterFn: (row, columnId, value) => {
 			const traderName = row.getValue(columnId) as string;
 			const walletAddress = row.original.walletAddress as string;
@@ -104,7 +106,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Followers"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => {
@@ -112,7 +114,7 @@ export const columns: ColumnDef<Trader>[] = [
 			const xUsername = row.original.xUsername as string;
 
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<p className="tabular-nums font-bold">
 						{followers > 0 ? formatNumber(followers) : "-"}
 					</p>
@@ -121,6 +123,9 @@ export const columns: ColumnDef<Trader>[] = [
 			);
 		},
 		size: 64,
+		meta: {
+			mobileHidden: true,
+		},
 	},
 	{
 		accessorKey: "tokensTotal",
@@ -129,17 +134,18 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Tokens"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => (
-			<div className="tabular-nums text-right font-bold">
+			<div className="hidden lg:block tabular-nums text-right font-bold">
 				{row.getValue("tokensTotal")}
 			</div>
 		),
 		size: 28,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -149,7 +155,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Win %"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => {
@@ -157,14 +163,14 @@ export const columns: ColumnDef<Trader>[] = [
 
 			if (winRate < 30) {
 				return (
-					<div className="text-right">
+					<div className="hidden lg:block text-right">
 						<p className="tabular-nums font-bold text-red-500">{winRate}%</p>
 					</div>
 				);
 			}
 
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<p className="tabular-nums font-bold text-green-500">{winRate}%</p>
 				</div>
 			);
@@ -172,6 +178,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 80,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -181,7 +188,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Trades"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-20"
 			/>
 		),
 		cell: ({ row }) => {
@@ -189,7 +196,7 @@ export const columns: ColumnDef<Trader>[] = [
 			const tradesSell = row.original.tradesSell as number;
 
 			return (
-				<div className="font-bold flex justify-end gap-1">
+				<div className="hidden lg:flex font-bold justify-end gap-1">
 					<p className="tabular-nums text-green-500">{tradesBuy}</p>
 					<span className="text-muted-foreground">{"/"}</span>
 					<p className="text-muted-foreground text-red-500">{tradesSell}</p>
@@ -199,6 +206,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 48,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -208,7 +216,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Avg Buy"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => {
@@ -218,7 +226,7 @@ export const columns: ColumnDef<Trader>[] = [
 			const avgBuyFormated = currencyFormaterShort(avgBuyUsd);
 
 			return (
-				<div className="text-right">
+				<div className="hidden lg:block text-right">
 					<div className="tabular-num font-bold flex justify-end gap-1">
 						<p>{avgBuySol}</p>
 						<Image
@@ -235,6 +243,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 32,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -244,7 +253,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Avg Entry"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => {
@@ -252,7 +261,7 @@ export const columns: ColumnDef<Trader>[] = [
 			const avgEntryFormated = currencyFormaterShort(avgEntryUsd);
 
 			return (
-				<div className="tabular-nums text-right font-bold">
+				<div className="hidden lg:block tabular-nums text-right font-bold">
 					{avgEntryFormated}
 				</div>
 			);
@@ -260,6 +269,7 @@ export const columns: ColumnDef<Trader>[] = [
 		size: 32,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -269,17 +279,18 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Avg Hold"
-				className="flex justify-end"
+				className="hidden lg:flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => (
-			<div className="tabular-nums text-right font-bold">
+			<div className="hidden lg:block tabular-nums text-right font-bold">
 				{durationFormater(row.getValue("avgHold"))}
 			</div>
 		),
 		size: 80,
 		meta: {
 			filterVariant: "range",
+			mobileHidden: true,
 		},
 	},
 	{
@@ -289,7 +300,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="PNL"
-				className="flex justify-end"
+				className="flex justify-end min-w-16"
 			/>
 		),
 		cell: ({ row }) => {
@@ -327,7 +338,7 @@ export const columns: ColumnDef<Trader>[] = [
 			<DataTableColumnHeader
 				column={column}
 				title="Share"
-				className="flex justify-center"
+				className="hidden lg:flex justify-center min-w-8"
 			/>
 		),
 		size: 32,
@@ -338,11 +349,14 @@ export const columns: ColumnDef<Trader>[] = [
 					href={url}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="flex justify-center"
+					className="hidden lg:flex justify-center"
 				>
 					<ExternalLink className="h-4 w-4 text-fuchsia-600" />
 				</a>
 			);
+		},
+		meta: {
+			mobileHidden: true,
 		},
 	},
 ];

@@ -26,9 +26,10 @@ import { DataTableHeader } from "@/components/table-header";
 import { useRangeFilters } from "@/hooks/use-range-filters";
 import { TableLoadingState } from "@/components/table-loading-state";
 import { TableEmptyState } from "@/components/table-empty-state";
+import { cn } from "@/lib/utils";
 
 interface BaseData {
-	id: string;
+  id: string;
 }
 
 export interface Filter {
@@ -145,6 +146,7 @@ export const DataTable = <TData extends BaseData, TValue>({
 									<TableCell
 										key={cell.id}
 										style={{ width: `${cell.column.getSize()}px` }}
+										className={cn(cell.column.columnDef.meta?.mobileHidden && "hidden md:table-cell")}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>

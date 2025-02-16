@@ -30,7 +30,7 @@ export const mockTraderData: Trader[] = [
 		rank: 2,
 		traderName: "CryptoTitan",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1802869283963510784/YNs8BZWb_400x400.jpg",
 		walletAddress: "5zYvL9M2qR7W3P1X8T6N4JXVKGAQdWpY",
 		followers: 95000,
 		xUsername: "@cryptotitan",
@@ -54,7 +54,7 @@ export const mockTraderData: Trader[] = [
 		rank: 3,
 		traderName: "DiamondHands",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1701621416611733504/dv0tXQbH_400x400.jpg",
 		walletAddress: "4N3J5W8KRG6M1V9A2QXPTWpXJZVY",
 		followers: 5060,
 		xUsername: "@diamondh",
@@ -78,7 +78,7 @@ export const mockTraderData: Trader[] = [
 		rank: 4,
 		traderName: "Orangie",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1887763323464146945/5HdM0_7C_400x400.jpg",
 		walletAddress: "0x1234567890123456789012345678901234567890",
 		followers: 1095832,
 		xUsername: "@orangie",
@@ -102,7 +102,7 @@ export const mockTraderData: Trader[] = [
 		rank: 5,
 		traderName: "MoonShot",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1874558173962481664/8HSTqIlD_400x400.jpg",
 		walletAddress: "9YTPV6M1A4N3J5XQ7W8KRGdWpXJZV",
 		followers: 730000,
 		xUsername: "@moonshot",
@@ -126,7 +126,7 @@ export const mockTraderData: Trader[] = [
 		rank: 6,
 		traderName: "HODLMaster",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1866907313824514048/frFnSyeX_400x400.jpg",
 		walletAddress: "3N5XPTV9A4Q7W8KRGdWpXJZVY",
 		followers: 158000,
 		xUsername: "@hodlmaster",
@@ -150,7 +150,7 @@ export const mockTraderData: Trader[] = [
 		rank: 7,
 		traderName: "MegaWhale",
 		imageUrl:
-			"https://pbs.twimg.com/profile_images/1884094483127521280/g0VvBBaY_400x400.jpg",
+			"https://pbs.twimg.com/profile_images/1878584793249583104/WMH0-IGY_400x400.jpg",
 		walletAddress: "5M2QXPT1V9A3N4J7W8KRGdWpXJZVY",
 		followers: 320000,
 		xUsername: "@megawhale",

@@ -64,6 +64,7 @@ export function DataTableHeader<TData>({ table }: DataTableHeaderProps<TData>) {
 						<TableHead
 							key={header.id}
 							style={{ width: `${header.getSize()}px` }}
+							className="hidden lg:table-cell lg:px-2"
 						>
 							{header.isPlaceholder
 								? null

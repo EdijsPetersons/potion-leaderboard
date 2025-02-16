@@ -66,7 +66,7 @@ export function TableFilters({
 						<SlidersHorizontal className="h-4 w-4" />
 						{activeFiltersCount > 0 && (
 							<Badge className="absolute -bottom-1 left-full rounded-full bg-fuchsia-600 hover:bg-fuchsia-600 text-xs text-foreground min-w-5 -translate-x-1/2 px-1.5 py-0.5">
-								{activeFiltersCount > 99 ? "99+" : activeFiltersCount}
+								{activeFiltersCount}
 							</Badge>
 						)}
 					</Button>
@@ -94,8 +94,13 @@ export function TableFilters({
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button variant="outline" size="icon">
+				<Button variant="outline" size="icon" className="relative">
 					<SlidersHorizontal className="h-4 w-4" />
+					{activeFiltersCount > 0 && (
+						<Badge className="absolute -bottom-1 left-full rounded-full bg-fuchsia-600 hover:bg-fuchsia-600 text-xs text-foreground min-w-5 -translate-x-1/2 px-1.5 py-0.5">
+							{activeFiltersCount}
+						</Badge>
+					)}
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent className="flex flex-col gap-0 p-4 md:p-6 h-full sm:max-w-lg [&>button:last-child]:hidden">
